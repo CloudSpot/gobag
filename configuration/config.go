@@ -2,7 +2,6 @@ package configuration
 
 import (
 	"fmt"
-	"strings"
 )
 
 func (version *Version) UnmarshalYAML(unmarshal func(interface{}) error) error {
