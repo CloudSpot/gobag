@@ -2,9 +2,6 @@ package configuration
 
 import (
 	"fmt"
-	"io"
-	"io/ioutil"
-	"reflect"
 	"strings"
 )
 
