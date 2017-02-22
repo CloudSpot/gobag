@@ -12,11 +12,12 @@ import (
 type ExecutorFunc func(ctx context.Context, args []string) error
 
 type Info struct {
-	Use   string
-	Short string
-	Long  string
-	Run   ExecutorFunc
-	Flags []*Flag
+	Use         string
+	Short       string
+	Long        string
+	Run         ExecutorFunc
+	Flags       []*Flag
+	SubCommands []*Info
 }
 
 type FlagType string
@@ -83,6 +84,11 @@ func makeCobraCommand(ctx context.Context, info *Info) *cobra.Command {
 
 	if info.Run != nil {
 		cmd.RunE = makeCobraRunner(ctx, info.Run, info.Flags)
+	}
+
+	for _, si := range info.SubCommands {
+		sub := makeCobraCommand(ctx, si)
+		cmd.AddCommand(sub)
 	}
 
 	return cmd
