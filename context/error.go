@@ -31,7 +31,7 @@ func ErrorTracking(ctx context.Context) context.Context {
 func TrackError(ctx context.Context, err error) {
 	ectx, ok := ctx.Value("errors.ctx").(*errorsContext)
 	if ok {
-		ectx.errors = append(errors, err)
+		ectx.errors = append(ectx.errors, err)
 	}
 }
 
