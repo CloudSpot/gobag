@@ -6,6 +6,35 @@ import (
 	"github.com/danielkrainas/gobag/api/errcode"
 )
 
+type errorsContext struct {
+	context.Context
+	errors errcode.Errors
+}
+
+func (ctx *errorsContext) Value(key interface{}) interface{} {
+	if key == "errors" {
+		return ctx.errors
+	} else if key == "errors.ctx" {
+		return ctx
+	}
+
+	return ctx.Context.Value(key)
+}
+
+func ErrorTracking(ctx context.Context) context.Context {
+	return &errorsContext{
+		Context: ctx,
+		errors:  make(errcode.Errors, 0),
+	}
+}
+
+func TrackError(ctx context.Context, err error) {
+	ectx, ok := ctx.Value("errors.ctx").(*errorsContext)
+	if ok {
+		ectx.errors = append(errors, err)
+	}
+}
+
 func WithErrors(ctx context.Context, errors errcode.Errors) context.Context {
 	return WithValue(ctx, "errors", errors)
 }
