@@ -1,9 +1,10 @@
 package uuid
 
 import (
-	"github.com/satori/go.uuid"
+	"github.com/segmentio/ksuid"
 )
 
 func Generate() string {
-	return uuid.NewV4().String()
+	uid, _ := ksuid.NewRandom()
+	return uid.String()
 }
