@@ -5,7 +5,7 @@ import (
 
 	"golang.org/x/net/context"
 
-	"github.com/danielkrainas/gobag/util/uuid"
+	"github.com/danielkrainas/gobag/util/uid"
 )
 
 type instancedContext struct {
@@ -17,7 +17,7 @@ type instancedContext struct {
 func (ctx *instancedContext) Value(key interface{}) interface{} {
 	if key == "instance.id" {
 		ctx.once.Do(func() {
-			ctx.id = uuid.Generate()
+			ctx.id = uid.Generate()
 		})
 
 		return ctx.id

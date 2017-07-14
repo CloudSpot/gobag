@@ -13,7 +13,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/gorilla/mux"
 
-	"github.com/danielkrainas/gobag/util/uuid"
+	"github.com/danielkrainas/gobag/util/uid"
 )
 
 var (
@@ -74,7 +74,7 @@ func WithRequest(ctx context.Context, r *http.Request) context.Context {
 	return &httpRequestContext{
 		Context:   ctx,
 		startedAt: time.Now(),
-		id:        uuid.Generate(),
+		id:        uid.Generate(),
 		r:         r,
 	}
 }
