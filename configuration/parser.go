@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/go-yaml/yaml"
+	"github.com/sirupsen/logrus"
 )
 
 type Version string
