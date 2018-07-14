@@ -1,4 +1,4 @@
-package gocontainer
+package bagcontainer
 
 type StringSet map[string]struct{}
 
