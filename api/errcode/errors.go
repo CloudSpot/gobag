@@ -95,7 +95,7 @@ func (e Error) WithDetail(detail interface{}) Error {
 	return Error{
 		Code:    e.Code,
 		Message: e.Message,
-		Detail:  e.Detail,
+		Detail:  detail,
 	}
 }
 

@@ -115,5 +115,5 @@ func contextWithFlags(ctx context.Context, cmd *cobra.Command, flags []*Flag) co
 		values["flags."+f.Long] = vi
 	}
 
-	return acontext.WithValues(ctx, values)
+	return bagcontext.WithValues(ctx, values)
 }
