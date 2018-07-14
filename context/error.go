@@ -3,7 +3,7 @@ package bagcontext
 import (
 	"context"
 
-	"github.com/danielkrainas/gobag/api/errcode"
+	"github.com/danielkrainas/gobag/errcode"
 )
 
 type errorsContext struct {

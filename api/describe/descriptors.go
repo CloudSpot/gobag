@@ -3,7 +3,7 @@ package describe
 import (
 	"regexp"
 
-	"github.com/danielkrainas/gobag/api/errcode"
+	"github.com/danielkrainas/gobag/errcode"
 )
 
 type Route struct {
