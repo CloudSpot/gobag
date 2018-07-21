@@ -119,6 +119,13 @@ func String(key string, required bool, ref *string) ValueParser {
 	})
 }
 
+func Interface(key string, required bool, ref *interface{}) ValueParser {
+	return Parser(key, required, func(field interface{}) error {
+		*ref = field
+		return nil
+	})
+}
+
 func Bool(key string, required bool, ref *bool) ValueParser {
 	return Parser(key, required, func(field interface{}) error {
 		v, err := iconv.Bool(field)
