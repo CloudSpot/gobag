@@ -5,7 +5,10 @@ import (
 	"fmt"
 )
 
-var ErrRequired = errors.New("missing or invalid")
+var (
+	ErrRequired = errors.New("missing or invalid")
+	ErrPositive = errors.New("cannot be negative")
+)
 
 type Validator interface {
 	Validate() error
@@ -62,6 +65,26 @@ func Elements(key string, els []interface{}) FieldValidator {
 					return fmt.Errorf("#%d: %v", i, err)
 				}
 			}
+		}
+
+		return nil
+	})
+}
+
+func Required(key string, v interface{}) FieldValidator {
+	return MakeFieldValidator(key, func() error {
+		if v == nil {
+			return ErrRequired
+		}
+
+		return nil
+	})
+}
+
+func PositiveFloat32(key string, v float32) FieldValidator {
+	return MakeFieldValidator(key, func() error {
+		if v < 0 {
+			return ErrPositive
 		}
 
 		return nil

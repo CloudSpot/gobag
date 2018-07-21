@@ -119,6 +119,17 @@ func String(key string, required bool, ref *string) ValueParser {
 	})
 }
 
+func Bool(key string, required bool, ref *bool) ValueParser {
+	return Parser(key, required, func(field interface{}) error {
+		v, err := iconv.Bool(field)
+		if err == nil {
+			*ref = v
+		}
+
+		return err
+	})
+}
+
 func Stringish(key string, required bool, setter func(v string)) ValueParser {
 	return Parser(key, required, func(field interface{}) error {
 		v, err := iconv.String(field)
