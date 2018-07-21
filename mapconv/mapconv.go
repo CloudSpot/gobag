@@ -119,6 +119,50 @@ func String(key string, required bool, ref *string) ValueParser {
 	})
 }
 
+func Stringish(key string, required bool, setter func(v string)) ValueParser {
+	return Parser(key, required, func(field interface{}) error {
+		v, err := iconv.String(field)
+		if err == nil {
+			setter(v)
+		}
+
+		return err
+	})
+}
+
+func Map(key string, required bool, ref *map[string]interface{}) ValueParser {
+	return Parser(key, required, func(field interface{}) error {
+		v, err := iconv.Map(field)
+		if err == nil {
+			*ref = v
+		}
+
+		return err
+	})
+}
+
+func MapArray(key string, required bool, ref *[]map[string]interface{}) ValueParser {
+	return Parser(key, required, func(field interface{}) error {
+		v, err := iconv.MapArray(field)
+		if err == nil {
+			*ref = v
+		}
+
+		return err
+	})
+}
+
+func StringArray(key string, required bool, ref *[]string) ValueParser {
+	return Parser(key, required, func(field interface{}) error {
+		v, err := iconv.StringArray(field)
+		if err == nil {
+			*ref = v
+		}
+
+		return err
+	})
+}
+
 func UnixTime(key string, required bool, ref *time.Time) ValueParser {
 	return Parser(key, required, func(field interface{}) error {
 		v, err := iconv.Int64(field)
@@ -130,7 +174,7 @@ func UnixTime(key string, required bool, ref *time.Time) ValueParser {
 	})
 }
 
-func ParseUnmap(key string, required bool, unmap UnmapFunc) ValueParser {
+func ParseUnmap(key string, required bool, init func(), unmap UnmapFunc) ValueParser {
 	return Parser(key, required, func(field interface{}) error {
 		v, err := iconv.Map(field)
 		if err == nil {
@@ -141,13 +185,32 @@ func ParseUnmap(key string, required bool, unmap UnmapFunc) ValueParser {
 	})
 }
 
-func ParseUnmapArray(key string, required bool, unmap UnmapFunc) ValueParser {
+func ParseUnmapArray(key string, required bool, init func(), unmap UnmapFunc) ValueParser {
 	return Parser(key, required, func(field interface{}) error {
 		v, err := iconv.MapArray(field)
 		if err == nil {
+			init()
 			for _, m := range v {
 				if err = unmap(m); err != nil {
 					break
+				}
+			}
+		}
+
+		return err
+	})
+}
+
+func ParseUnmapMap(key string, required bool, init func(), unmap func(key string, nm map[string]interface{}) error) ValueParser {
+	return Parser(key, required, func(field interface{}) error {
+		v, err := iconv.Map(field)
+		if err == nil {
+			init()
+			for k, m := range v {
+				if sm, ok := m.(map[string]interface{}); ok {
+					if err = unmap(k, sm); err != nil {
+						break
+					}
 				}
 			}
 		}
@@ -165,4 +228,17 @@ func Compose(m map[string]interface{}, parsers ...ValueParser) error {
 	}
 
 	return err
+}
+
+func MapMapperArray(items []interface{}) []map[string]interface{} {
+	ms := make([]map[string]interface{}, 0)
+	for _, item := range items {
+		if mapper, ok := item.(Mapper); ok {
+			ms = append(ms, mapper.Map())
+		} else if m, ok := item.(map[string]interface{}); ok {
+			ms = append(ms, m)
+		}
+	}
+
+	return ms
 }
