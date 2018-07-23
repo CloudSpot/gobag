@@ -194,13 +194,17 @@ func UnixTime(key string, required bool, ref *time.Time) ValueParser {
 
 func ParseUnmap(key string, required bool, init func(), unmap UnmapFunc) ValueParser {
 	return Parser(key, required, func(field interface{}) error {
-		v, err := iconv.Map(field)
-		if err == nil {
-			if v != nil {
-				init()
-			}
+		if field == nil {
+			err = unmap(nil)
+		} else {
+			v, err := iconv.Map(field)
+			if err == nil {
+				if v != nil {
+					init()
+				}
 
-			err = unmap(v)
+				err = unmap(v)
+			}
 		}
 
 		return err
@@ -209,15 +213,20 @@ func ParseUnmap(key string, required bool, init func(), unmap UnmapFunc) ValuePa
 
 func ParseUnmapArray(key string, required bool, init func(), unmap UnmapFunc) ValueParser {
 	return Parser(key, required, func(field interface{}) error {
-		v, err := iconv.MapArray(field)
-		if err == nil {
-			if v != nil {
-				init()
-			}
+		var err error
+		if field == nil {
+			err = unmap(nil)
+		} else {
+			v, err := iconv.MapArray(field)
+			if err == nil {
+				if v != nil {
+					init()
+				}
 
-			for _, m := range v {
-				if err = unmap(m); err != nil {
-					break
+				for _, m := range v {
+					if err = unmap(m); err != nil {
+						break
+					}
 				}
 			}
 		}
@@ -228,9 +237,16 @@ func ParseUnmapArray(key string, required bool, init func(), unmap UnmapFunc) Va
 
 func ParseUnmapMap(key string, required bool, init func(), unmap func(key string, nm map[string]interface{}) error) ValueParser {
 	return Parser(key, required, func(field interface{}) error {
+		if field == nil {
+			return nil
+		}
+
 		v, err := iconv.Map(field)
 		if err == nil {
-			init()
+			if v != nil {
+				init()
+			}
+
 			for k, m := range v {
 				if sm, ok := m.(map[string]interface{}); ok {
 					if err = unmap(k, sm); err != nil {
