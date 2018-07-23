@@ -194,6 +194,7 @@ func UnixTime(key string, required bool, ref *time.Time) ValueParser {
 
 func ParseUnmap(key string, required bool, init func(), unmap UnmapFunc) ValueParser {
 	return Parser(key, required, func(field interface{}) error {
+		var err error
 		if field == nil {
 			err = unmap(nil)
 		} else {
