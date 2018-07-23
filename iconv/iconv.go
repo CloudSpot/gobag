@@ -3,6 +3,7 @@ package iconv
 import (
 	"fmt"
 	"math"
+	"strconv"
 )
 
 func errorInvalid(value interface{}) error {
@@ -86,6 +87,13 @@ func Int64(field interface{}) (int64, error) {
 		v = int64(fv)
 	case int64:
 		v = fv
+	case string:
+		pv, err := strconv.ParseInt(fv, 10, 64)
+		if err != nil {
+			return 0, err
+		}
+
+		v = pv
 	default:
 		return 0, errorInvalid(field)
 	}
@@ -110,6 +118,13 @@ func Int32(field interface{}) (int32, error) {
 		if fv > math.MaxInt32 {
 			return 0, errorInvalid(field)
 		}
+	case string:
+		pv, err := strconv.ParseInt(fv, 10, 32)
+		if err != nil {
+			return 0, err
+		}
+
+		v = int32(pv)
 	default:
 		return 0, errorInvalid(field)
 	}
@@ -140,6 +155,14 @@ func Int16(field interface{}) (int16, error) {
 		v = int16(fv)
 	case int16:
 		v = fv
+
+	case string:
+		pv, err := strconv.ParseInt(fv, 10, 16)
+		if err != nil {
+			return 0, err
+		}
+
+		v = int16(pv)
 	default:
 		return 0, errorInvalid(field)
 	}
@@ -156,6 +179,13 @@ func Int(field interface{}) (int, error) {
 		v = int(fv)
 	case int64:
 		v = int(fv)
+	case string:
+		pv, err := strconv.ParseInt(fv, 10, 32)
+		if err != nil {
+			return 0, err
+		}
+
+		v = int(pv)
 	default:
 		return 0, errorInvalid(field)
 	}
@@ -175,6 +205,13 @@ func Float64(field interface{}) (float64, error) {
 		return float64(v), nil
 	case float64:
 		return v, nil
+	case string:
+		pv, err := strconv.ParseFloat(v, 64)
+		if err != nil {
+			return 0, err
+		}
+
+		return pv, nil
 	}
 
 	return 0, errorInvalid(field)
@@ -192,6 +229,13 @@ func Float32(field interface{}) (float32, error) {
 		return float32(v), nil
 	case float32:
 		return v, nil
+	case string:
+		pv, err := strconv.ParseFloat(v, 32)
+		if err != nil {
+			return 0, err
+		}
+
+		return float32(pv), nil
 	}
 
 	return 0, errorInvalid(field)
