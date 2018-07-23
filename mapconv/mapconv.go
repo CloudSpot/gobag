@@ -196,6 +196,10 @@ func ParseUnmap(key string, required bool, init func(), unmap UnmapFunc) ValuePa
 	return Parser(key, required, func(field interface{}) error {
 		v, err := iconv.Map(field)
 		if err == nil {
+			if v != nil {
+				init()
+			}
+
 			err = unmap(v)
 		}
 
@@ -207,7 +211,10 @@ func ParseUnmapArray(key string, required bool, init func(), unmap UnmapFunc) Va
 	return Parser(key, required, func(field interface{}) error {
 		v, err := iconv.MapArray(field)
 		if err == nil {
-			init()
+			if v != nil {
+				init()
+			}
+
 			for _, m := range v {
 				if err = unmap(m); err != nil {
 					break
