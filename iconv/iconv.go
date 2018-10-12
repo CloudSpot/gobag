@@ -81,12 +81,18 @@ func Int64(field interface{}) (int64, error) {
 	switch fv := field.(type) {
 	case int:
 		v = int64(fv)
+	case int8:
+		v = int64(fv)
 	case int16:
 		v = int64(fv)
 	case int32:
 		v = int64(fv)
 	case int64:
 		v = fv
+	case float32:
+		v = int64(fv)
+	case float64:
+		v = int64(fv)
 	case string:
 		pv, err := strconv.ParseInt(fv, 10, 64)
 		if err != nil {
@@ -110,6 +116,8 @@ func Int32(field interface{}) (int32, error) {
 		}
 
 		v = int32(fv)
+	case int8:
+		v = int32(fv)
 	case int16:
 		v = int32(fv)
 	case int32:
@@ -119,6 +127,10 @@ func Int32(field interface{}) (int32, error) {
 			return 0, errorInvalid(field)
 		}
 
+		v = int32(fv)
+	case float32:
+		v = int32(fv)
+	case float64:
 		v = int32(fv)
 	case string:
 		pv, err := strconv.ParseInt(fv, 10, 32)
