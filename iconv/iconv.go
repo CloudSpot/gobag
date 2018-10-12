@@ -118,6 +118,8 @@ func Int32(field interface{}) (int32, error) {
 		if fv > math.MaxInt32 {
 			return 0, errorInvalid(field)
 		}
+
+		v = int32(fv)
 	case string:
 		pv, err := strconv.ParseInt(fv, 10, 32)
 		if err != nil {
