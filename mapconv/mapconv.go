@@ -242,12 +242,16 @@ func ParseUnmapMap(key string, required bool, init func(), unmap func(key string
 			return nil
 		}
 
-		v, err := iconv.Map(field)
-		if err == nil {
-			if v != nil {
-				init()
+		var err error
+		if nm, ok := field.(map[string]map[string]interface{}); ok {
+			init()
+			for k, m := range nm {
+				if err = unmap(k, m); err != nil {
+					break
+				}
 			}
-
+		} else if v, err := iconv.Map(field); err != nil {
+			init()
 			for k, m := range v {
 				if sm, ok := m.(map[string]interface{}); ok {
 					if err = unmap(k, sm); err != nil {
