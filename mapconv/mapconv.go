@@ -250,7 +250,7 @@ func ParseUnmapMap(key string, required bool, init func(), unmap func(key string
 					break
 				}
 			}
-		} else if v, err := iconv.Map(field); err != nil {
+		} else if v, err := iconv.Map(field); err == nil {
 			init()
 			for k, m := range v {
 				if sm, ok := m.(map[string]interface{}); ok {
