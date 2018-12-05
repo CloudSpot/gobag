@@ -18,9 +18,9 @@ func Info(ctx context.Context, format string, args ...interface{}) {
 func Debug(ctx context.Context, format string, args ...interface{}) {
 	log := bagcontext.GetLogger(ctx)
 	if len(args) > 0 {
-		log.Infof(format, args...)
+		log.Debugf(format, args...)
 	} else {
-		log.Info(format)
+		log.Debug(format)
 	}
 }
 
