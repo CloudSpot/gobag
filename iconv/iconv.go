@@ -189,9 +189,15 @@ func Int(field interface{}) (int, error) {
 	switch fv := field.(type) {
 	case int:
 		v = fv
+	case int16:
+		v = int(fv)
 	case int32:
 		v = int(fv)
 	case int64:
+		v = int(fv)
+	case float32:
+		v = int(fv)
+	case float64:
 		v = int(fv)
 	case string:
 		pv, err := strconv.ParseInt(fv, 10, 32)
