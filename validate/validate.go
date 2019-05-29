@@ -47,6 +47,16 @@ func RequiredString(key string, v string) FieldValidator {
 	})
 }
 
+func RequiredStringP(key string, v *string) FieldValidator {
+	return MakeFieldValidator(key, func() error {
+		if v == nil || *v == "" {
+			return ErrRequired
+		}
+
+		return nil
+	})
+}
+
 func IsTrue(key string, v bool, msg string) FieldValidator {
 	return MakeFieldValidator(key, func() error {
 		if !v {
