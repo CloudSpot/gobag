@@ -49,7 +49,7 @@ func Int(key string, required bool, ref *int) ValueParser {
 			*ref = v
 		}
 
-		return nil
+		return err
 	})
 }
 
@@ -60,7 +60,7 @@ func Int16(key string, required bool, ref *int16) ValueParser {
 			*ref = v
 		}
 
-		return nil
+		return err
 	})
 }
 
@@ -71,7 +71,7 @@ func Int32(key string, required bool, ref *int32) ValueParser {
 			*ref = v
 		}
 
-		return nil
+		return err
 	})
 }
 
@@ -82,7 +82,7 @@ func Int64(key string, required bool, ref *int64) ValueParser {
 			*ref = v
 		}
 
-		return nil
+		return err
 	})
 }
 
@@ -93,7 +93,7 @@ func Float64(key string, required bool, ref *float64) ValueParser {
 			*ref = v
 		}
 
-		return nil
+		return err
 	})
 }
 
@@ -104,6 +104,22 @@ func Float32(key string, required bool, ref *float32) ValueParser {
 			*ref = v
 		}
 
+		return err
+	})
+}
+
+func Float32P(key string, required bool, ref **float32) ValueParser {
+	return Parser(key, required, func(field interface{}) error {
+		if field != nil {
+			v, err := iconv.Float32(field)
+			if err == nil {
+				*ref = &v
+			}
+
+			return err
+		}
+
+		*ref = nil
 		return nil
 	})
 }
