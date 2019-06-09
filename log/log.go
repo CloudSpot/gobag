@@ -6,6 +6,15 @@ import (
 	"github.com/danielkrainas/gobag/context"
 )
 
+func Fatal(ctx context.Context, format string, args ...interface{}) {
+	log := bagcontext.GetLogger(ctx)
+	if len(args) > 0 {
+		log.Fatalf(format, args...)
+	} else {
+		log.Fatal(format)
+	}
+}
+
 func Info(ctx context.Context, format string, args ...interface{}) {
 	log := bagcontext.GetLogger(ctx)
 	if len(args) > 0 {
