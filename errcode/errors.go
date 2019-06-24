@@ -88,7 +88,12 @@ func (e Error) ErrorCode() ErrorCode {
 }
 
 func (e Error) Error() string {
-	return fmt.Sprintf("%s: %s", e.Code.Error(), e.Message)
+	s := fmt.Sprintf("%s: %s", e.Code.Error(), e.Message)
+	if e.Detail != nil {
+		s = fmt.Sprintf("%s: %+#v", s, e.Detail)
+	}
+
+	return s
 }
 
 func (e Error) WithDetail(detail interface{}) Error {
