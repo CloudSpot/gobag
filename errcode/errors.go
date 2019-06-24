@@ -90,7 +90,11 @@ func (e Error) ErrorCode() ErrorCode {
 func (e Error) Error() string {
 	s := fmt.Sprintf("%s: %s", e.Code.Error(), e.Message)
 	if e.Detail != nil {
-		s = fmt.Sprintf("%s: %+#v", s, e.Detail)
+		if stringDetails, ok := e.Detail.(string); ok {
+			s = fmt.Sprintf("%s: %s", s, stringDetails)
+		} else {
+			s = fmt.Sprintf("%s: %+#v", s, e.Detail)
+		}
 	}
 
 	return s
