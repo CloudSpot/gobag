@@ -6,13 +6,13 @@ import (
 	"strings"
 	"sync/atomic"
 
-	"github.com/prometheus/common/log"
+	"go.uber.org/zap"
 )
 
 func parseIP(s string) net.IP {
 	ip := net.ParseIP(s)
 	if ip == nil {
-		log.Warnf("invalid remote IP address: %q", s)
+		zap.Warnf("invalid remote IP address: %q", s)
 	}
 
 	return ip
