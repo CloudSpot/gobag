@@ -12,7 +12,7 @@ import (
 func parseIP(s string) net.IP {
 	ip := net.ParseIP(s)
 	if ip == nil {
-		zap.Warnf("invalid remote IP address: %q", s)
+		zap.S().Warnf("invalid remote IP address: %q", s)
 	}
 
 	return ip
