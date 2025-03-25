@@ -13,7 +13,7 @@ import (
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/danielkrainas/gobag/util/uid"
+	"github.com/CloudSpot/gobag/util/uid"
 )
 
 var (

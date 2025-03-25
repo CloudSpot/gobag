@@ -1,12 +1,12 @@
 # gobag
 
-[![License](https://img.shields.io/badge/license-Unlicense-blue.svg?style=flat)](UNLICENSE) [![Go Report Card](https://goreportcard.com/badge/github.com/danielkrainas/gobag)](https://goreportcard.com/report/github.com/danielkrainas/gobag)
+[![License](https://img.shields.io/badge/license-Unlicense-blue.svg?style=flat)](UNLICENSE) [![Go Report Card](https://goreportcard.com/badge/github.com/CloudSpot/gobag)](https://goreportcard.com/report/github.com/CloudSpot/gobag)
 
 GoBag is a set of Go utility packages that I've built and find useful to use across projects. 
 
 ## Bugs and Feedback
 
-If you see a bug or have a suggestion, feel free to open an issue [here](https://github.com/danielkrainas/gobag/issues).
+If you see a bug or have a suggestion, feel free to open an issue [here](https://github.com/CloudSpot/gobag/issues).
 
 ## Contributions
 

@@ -6,7 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/danielkrainas/gobag/context"
+	"github.com/CloudSpot/gobag/context"
 )
 
 type ExecutorFunc func(ctx context.Context, args []string) error

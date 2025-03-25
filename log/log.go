@@ -3,7 +3,7 @@ package log
 import (
 	"context"
 
-	"github.com/danielkrainas/gobag/context"
+	"github.com/CloudSpot/gobag/context"
 )
 
 func Fatal(ctx context.Context, format string, args ...interface{}) {
