@@ -1,9 +1,5 @@
 package maputil
 
-import (
-	"github.com/danielkrainas/gobag/container"
-)
-
 func Filter(m map[string]interface{}, allowedKeys []string) map[string]interface{} {
 	var ok bool
 	var v interface{}

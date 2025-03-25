@@ -1,4 +1,4 @@
-module github.com/danielkrainas/gobag
+module github.com/CloudSpot/gobag
 
 go 1.21.6
 

@@ -5,7 +5,7 @@ import (
 
 	"golang.org/x/net/context"
 
-	"github.com/danielkrainas/gobag/util/uid"
+	"github.com/CloudSpot/gobag/util/uid"
 )
 
 type instancedContext struct {

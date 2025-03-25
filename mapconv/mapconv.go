@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/danielkrainas/gobag/iconv"
+	"github.com/CloudSpot/gobag/iconv"
 )
 
 type Mapper interface {
